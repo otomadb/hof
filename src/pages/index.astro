@@ -6,16 +6,32 @@ import type { ComponentProps } from "astro/types";
 import TopSlides from "../components/TopSlides.astro";
 import getThumbnail from "../components/getThumbnail";
 import fetch10sen from "../data/fetch10sen";
-
-const data = await fetch10sen();
+import fetchMiru10 from "../data/fetchMiru10";
 
 const ten: ComponentProps<typeof TopSlides>[] = await Promise.all(
-  Object.entries(data)
+  Object.entries(await fetch10sen())
     .toReversed()
     .map(async ([year, values]) => {
       return {
         href: `/10sen/${year}`,
         title: `音MAD作者が選ぶ${year}年の音MAD10選`,
+        c: await Promise.all(
+          values.slice(0, 8).map(async ({ title, url, type }) => ({
+            title,
+            thumbnail: await getThumbnail(type, url),
+          })),
+        ),
+      };
+    }),
+);
+
+const miru10: ComponentProps<typeof TopSlides>[] = await Promise.all(
+  Object.entries(await fetchMiru10())
+    .toReversed()
+    .map(async ([year, values]) => {
+      return {
+        href: `/miru10/${year}`,
+        title: `見る専も選ぶ${year}年の音MAD10選`,
         c: await Promise.all(
           values.slice(0, 8).map(async ({ title, url, type }) => ({
             title,
@@ -33,6 +49,11 @@ const ten: ComponentProps<typeof TopSlides>[] = await Promise.all(
   <div class="flex flex-col gap-y-8">
     {
       ten.map((props) => (
+        <TopSlides {...props} />
+      ))
+    }
+    {
+      miru10.map((props) => (
         <TopSlides {...props} />
       ))
     }
