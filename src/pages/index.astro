@@ -15,7 +15,7 @@ const ten: ComponentProps<typeof TopSlides>[] = await Promise.all(
     .map(async ([year, values]) => {
       return {
         href: `/10sen/${year}`,
-        title: `${year}年の音MAD10選`,
+        title: `音MAD作者が選ぶ${year}年の音MAD10選`,
         c: await Promise.all(
           values.slice(0, 8).map(async ({ title, url, type }) => ({
             title,

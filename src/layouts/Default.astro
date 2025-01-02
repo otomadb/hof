@@ -19,11 +19,14 @@ const siteTitle = Astro.props.title ? `${Astro.props.title} | HoF` : "HoF";
   </head>
   <body class="bg-slate-50">
     <nav
-      class="sticky top-0 left-0 bg-slate-900/75 z-infinity shadow-lg"
+      class="sticky top-0 left-0 bg-slate-900/75 z-infinity shadow-lg "
       style={{ backdropFilter: "blur(4px)" }}
     >
       <div class="container mx-auto px-12 py-4 flex justify-between items-center">
         <a href="/" class="text-2xl text-white">音MAD HoF</a>
+        <div>
+          <a href="https://github.com/otomadb/hof" class="text-xl text-white">GitHub</a>
+        </div>
       </div>
     </nav>
     <main class="container mx-auto px-12 py-8">

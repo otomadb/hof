@@ -34,7 +34,10 @@ const a: [string, ComponentProps<typeof Card>[]][] = Object.entries(
   .map(([b, c]) => [b, c.map(({ count, ...rest }) => ({ ...rest }))]);
 ---
 
-<NormalLayout title={`${year}年の音MAD10選`}>
+<NormalLayout title={`音MAD作者が選ぶ${year}年の音MAD10選`}>
+  <p class="text-slate-900 mb-4 text-center">
+    <a href=`http://oto10.s602.xrea.com/10sen/${year}-r.html`>ウェブサイト</a>
+  </p>
   <div class="mt-8 flex flex-col gap-y-4">
     {
       a.map(([b, c]) =>
