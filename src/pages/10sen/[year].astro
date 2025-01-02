@@ -1,0 +1,48 @@
+---
+import NormalLayout from "../../layouts/Default.astro";
+import data from "../../data/10sen.json";
+// biome-ignore lint/style/useImportType: <explanation>
+import Card from "../../components/Card.astro";
+import type { ComponentProps } from "astro/types";
+
+export function getStaticPaths() {
+  return Object.keys(data).map((year) => ({
+    params: { year },
+  }));
+}
+
+const { year } = Astro.params;
+
+type CardProps = ComponentProps<typeof Card>;
+
+const a: [string, CardProps[]][] = Object.entries(
+  Object.groupBy(data[year as keyof typeof data], ({ count }) => count),
+)
+  .toSorted(([a], [b]) => Number.parseInt(b, 10) - Number.parseInt(a, 10))
+  .filter(
+    (
+      x,
+    ): x is [
+      string,
+      { count: number; url: string | null; title: string; type: string }[],
+    ] => !!x[1],
+  )
+  .map(([b, c]) => [b, c.map(({ count, ...rest }) => ({ ...rest }))]);
+---
+
+<NormalLayout>
+  <div class="flex flex-col gap-y-4">
+    {
+      a.map(([b, c]) =>
+        <div>
+          <h2 class="text-2xl">{b}票</h2>
+          <div class="mt-2 grid grid-cols-1 gap-y-4">
+            {c.map((w) =>
+              <Card {...w}></Card>
+            )}
+          </div>
+        </div>
+      )
+    }
+  </div>
+</NormalLayout>

@@ -1,7 +1,18 @@
 ---
-import NormalLayout from "~/layouts/Default.astro";
+import NormalLayout from "../layouts/Default.astro";
+
+import data from "../data/10sen.json";
 ---
 
 <NormalLayout>
-  <p>Test</p>
+  {
+    Object.entries(data).toReversed().map(([year, value]) => (
+      <div>
+        <h2 class="text-4xl font-bold">
+          <a href={"/10sen/" + year}>{year}</a>
+        </h2>
+        <p>{JSON.stringify(value)}</p>
+      </div>
+    ))
+  }
 </NormalLayout>

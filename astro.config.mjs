@@ -6,4 +6,7 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   integrations: [svelte(), tailwind()],
   output: "static",
+  image: {
+    domains: ["img.cdn.nimg.jp"],
+  },
 });

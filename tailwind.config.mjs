@@ -1,23 +1,23 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 
-import pluginContainerQueries from "@tailwindcss/container-queries"; 
+import pluginContainerQueries from "@tailwindcss/container-queries";
 import plugin from "tailwindcss/plugin";
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx}"],
-  theme: { 
+  theme: {
     zIndex: {
       0: 0,
       1: 1,
       infinity: 9999,
     },
     extend: {
-      fontFamily: { 
-      }, 
+      fontFamily: {
+        sans: ['"Zen Antique Soft"', ...defaultTheme.fontFamily.sans],
+        mono: ['"JetBrains Mono Variable"', ...defaultTheme.fontFamily.mono],
+      },
     },
   },
-  plugins: [ 
-    pluginContainerQueries,  
-  ],
+  plugins: [pluginContainerQueries],
 };
