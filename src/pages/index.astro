@@ -4,14 +4,15 @@ import NormalLayout from "../layouts/Default.astro";
 import data from "../data/10sen.json";
 ---
 
-<NormalLayout>
+<NormalLayout title="音MAD HoF">
+  <p class="text-slate-900 mb-4 text-center">このサイトでは何らかの形で殿堂入りした音MADのリストをまとめています．</p>
+
   {
     Object.entries(data).toReversed().map(([year, value]) => (
       <div>
-        <h2 class="text-4xl font-bold">
-          <a href={"/10sen/" + year}>{year}</a>
+        <h2 class="text-3xl text-slate-950">
+          <a href={"/10sen/" + year}>{year}年の音MAD10選</a>
         </h2>
-        <p>{JSON.stringify(value)}</p>
       </div>
     ))
   }
