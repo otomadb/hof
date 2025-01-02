@@ -1,22 +1,26 @@
 ---
 import NormalLayout from "../../layouts/Default.astro";
-import data from "../../data/10sen.json";
+import fetch10sen from "../../data/fetch10sen";
 // biome-ignore lint/style/useImportType: <explanation>
 import Card from "../../components/Card.astro";
 import type { ComponentProps } from "astro/types";
 
-export function getStaticPaths() {
-  return Object.keys(data).map((year) => ({
+const data = await fetch10sen();
+
+export async function getStaticPaths() {
+  return Object.keys(await fetch10sen()).map((year) => ({
     params: { year },
   }));
 }
 
 const { year } = Astro.params;
 
-type CardProps = ComponentProps<typeof Card>;
-
-const a: [string, CardProps[]][] = Object.entries(
-  Object.groupBy(data[year as keyof typeof data], ({ count }) => count),
+const a: [string, ComponentProps<typeof Card>[]][] = Object.entries(
+  Object.groupBy(
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    data[year]!,
+    ({ count }) => count,
+  ),
 )
   .toSorted(([a], [b]) => Number.parseInt(b, 10) - Number.parseInt(a, 10))
   .filter(

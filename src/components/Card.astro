@@ -30,7 +30,7 @@ const furl = url ? new URL(url) : "#";
   </div>
   <div class="flex-grow relative flex-grow">
     {<img
-      class="absolute top-0 left-0 object-cover w-full h-full z-[-1] select-none group-hover:scale-110 transition-transform duration-500"
+      class="absolute top-0 left-0 object-cover w-full h-full z-[-1] select-none group-hover:scale-105 transition-transform duration-500"
       src={thumbnail}
       alt={title}
       width={512}
@@ -39,7 +39,7 @@ const furl = url ? new URL(url) : "#";
       decoding="async"
     />}
     <div
-      class="h-full bg-white/90 group-hover:bg-white/75 transition-colors duration-300 py-2 px-6 flex flex-col justify-between"
+      class="h-full bg-white/90 group-hover:bg-white/80 transition-colors duration-300 py-2 px-6 flex flex-col justify-between"
       style={{ backdropFilter: "blur(2px)" }}
     >
       <p class="text-slate-700 break-all text-lg line-clamp-2">{title}</p>
