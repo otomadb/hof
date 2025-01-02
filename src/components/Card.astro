@@ -19,8 +19,8 @@ const furl = url ? new URL(url) : "#";
   href={url}
 >
   <div class="relative z-1">
-    {<Image
-      class="h-full object-cover bg-black"
+    {<img
+      class="w-[192px] h-full object-cover bg-black"
       src={thumbnail ? thumbnail : pseudoThumbnail}
       alt={title}
       width={192}
@@ -30,7 +30,7 @@ const furl = url ? new URL(url) : "#";
     />}
   </div>
   <div class="relative flex-grow overflow-hidden">
-    {<Image
+    {<img
       class="absolute top-0 left-0 object-cover w-full h-full z-[-1] select-none group-hover:scale-110 transition-transform duration-500"
       src={thumbnail ? thumbnail : pseudoThumbnail}
       alt={title}
