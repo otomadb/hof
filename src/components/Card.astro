@@ -1,6 +1,5 @@
 ---
 import getThumbnail from "./getThumbnail";
-import pseudoThumbnail from "../images/pseudo_thumbnail.jpg";
 import { Image } from "astro:assets";
 interface Props {
   title: string;
@@ -21,7 +20,7 @@ const furl = url ? new URL(url) : "#";
   <div class="flex-shrink-0 relative z-1">
     {<img
       class="w-full sm:w-[192px] h-full object-cover bg-black"
-      src={thumbnail ? thumbnail : pseudoThumbnail.src}
+      src={thumbnail}
       alt={title}
       width={192}
       height={108}
@@ -32,7 +31,7 @@ const furl = url ? new URL(url) : "#";
   <div class="flex-grow relative flex-grow">
     {<img
       class="absolute top-0 left-0 object-cover w-full h-full z-[-1] select-none group-hover:scale-110 transition-transform duration-500"
-      src={thumbnail ? thumbnail : pseudoThumbnail.src}
+      src={thumbnail}
       alt={title}
       width={512}
       height={288}

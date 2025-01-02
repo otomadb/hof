@@ -1,19 +1,37 @@
 ---
 import NormalLayout from "../layouts/Default.astro";
-
+import type { ComponentProps } from "astro/types";
 import data from "../data/10sen.json";
+// biome-ignore lint/style/useImportType: <explanation>
+import TopSlides from "../components/TopSlides.astro";
+import getThumbnail from "../components/getThumbnail";
+
+const ten: ComponentProps<typeof TopSlides>[] = await Promise.all(
+  Object.entries(data)
+    .toReversed()
+    .map(async ([year, values]) => {
+      return {
+        href: `/10sen/${year}`,
+        title: `${year}年の音MAD10選`,
+        c: await Promise.all(
+          values.slice(0, 8).map(async ({ title, url, type }) => ({
+            title,
+            thumbnail: await getThumbnail(type, url),
+          })),
+        ),
+      };
+    }),
+);
 ---
+
 
 <NormalLayout title="音MAD HoF">
   <p class="text-slate-900 mb-4 text-center">このサイトでは何らかの形で殿堂入りした音MADのリストをまとめています．</p>
-
-  {
-    Object.entries(data).toReversed().map(([year, value]) => (
-      <div>
-        <h2 class="text-3xl text-slate-950">
-          <a href={"/10sen/" + year}>{year}年の音MAD10選</a>
-        </h2>
-      </div>
-    ))
-  }
+  <div class="flex flex-col gap-y-8">
+    {
+      ten.map((props) => (
+        <TopSlides {...props} />
+      ))
+    }
+  </div>
 </NormalLayout>

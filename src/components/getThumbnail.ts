@@ -1,12 +1,17 @@
-export default async function (type: string, url: string | null) {
-  if (!url) return null;
+import pseudoThumbnail from "../images/pseudo_thumbnail.jpg";
+
+export default async function (
+  type: string,
+  url: string | null,
+): Promise<string> {
+  if (!url) return pseudoThumbnail.src;
 
   switch (type) {
     case "nicovideo": {
       const sourceId = /(nm|sm)\d+/.exec(url)?.[0];
 
       if (!sourceId) {
-        return null;
+        return pseudoThumbnail.src;
       }
 
       const res = await fetch(
@@ -15,11 +20,11 @@ export default async function (type: string, url: string | null) {
           "https://nicovideo-api-proxy.otomadb.com",
         ),
       );
-      if (!res.ok) return null;
+      if (!res.ok) return pseudoThumbnail.src;
 
-      return (await res.json())?.thumbnailUrl || null;
+      return (await res.json())?.thumbnailUrl || pseudoThumbnail.src;
     }
     default:
-      return null;
+      return pseudoThumbnail.src;
   }
 }

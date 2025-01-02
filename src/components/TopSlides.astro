@@ -1,0 +1,39 @@
+---
+interface Props {
+  title: string;
+  href: string;
+  c: { title: string; thumbnail: string }[];
+}
+
+const { title, href, c } = Astro.props;
+---
+
+<a
+  href={href}
+  class="block w-full h-[256px] overflow-hidden relative shadow-lg hover:shadow-xl rounded-lg transition-shadow duration-200"
+>
+  <div class="relative h-full">
+    {
+      c.map(({ thumbnail, title }, i) => (
+        <img
+          class="absolute w-[384px] h-full object-cover"
+          style={{
+            clipPath: "polygon(12.5% 0, 100% 0%, 87.5% 100%, 0% 100%)",
+            transform: "scale(1.05)",
+            left: (i - 0.125 * (i + 1)) * 384 + "px",
+            zIndex: -i
+          }}
+          src={thumbnail}
+          alt={title}
+          width={384}
+          height={256}
+        />
+      ))
+    }
+  </div>
+  <div class="absolute inset-0 z-1 bg-gradient-to-r from-white/50 to-white/95 flex flex-col items-end justify-center px-8 py-8">
+    <h2 class="text-4xl text-slate-700">
+      {title}
+    </h2>
+  </div>
+</a>
