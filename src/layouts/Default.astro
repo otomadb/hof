@@ -1,0 +1,18 @@
+---
+const title = Astro.props.title
+  ? `${Astro.props.title} | HoF`
+  : "HoF";
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main class="container mx-auto">
+      <slot />
+    </main>
+  </body>
+</html>

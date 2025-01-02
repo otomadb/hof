@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# VSCode
+.vscode/*.json
+!.vscode/extensions.json
+
+# log
+*.log
+logs/
+
+# build output
+.astro/
+dist/
+.wrangler/
+
+# lefthook
+lefthook-local.yml
