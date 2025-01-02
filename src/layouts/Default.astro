@@ -8,13 +8,40 @@ interface Props {
 
 const { title } = Astro.props;
 
-const siteTitle = Astro.props.title ? `${Astro.props.title} | HoF` : "HoF";
+const siteName = "音MAD HoF";
+const siteTitle = Astro.props.title
+  ? `${Astro.props.title} | ${siteName}`
+  : siteName;
+const description =
+  "このサイトでは何らかの形で殿堂入りした音MADのリストをまとめています。";
+const siteUrl = "https://hof.otomadb.com";
 ---
 
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="max-image-preview:large" />
+
+    <meta name="og:url" content={siteUrl} />
+    <meta name="og:type" content="website" />
+    <meta name="og:title" content={title} />
+    <meta name="og:site_name" content={siteName} />
+    <meta name="og:description" content={description} />
+    <meta name="og:image" content="/ogp.png" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:url" content={siteUrl} />
+    <meta name="twitter:site" content="@SnO2WMaN" />
+    <meta name="twitter:image" content="/ogp.png" />
+
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="canonical" href="https://otomadb.com/" />
+
     <title>{siteTitle}</title>
   </head>
   <body class="bg-slate-50">
@@ -23,9 +50,12 @@ const siteTitle = Astro.props.title ? `${Astro.props.title} | HoF` : "HoF";
       style={{ backdropFilter: "blur(4px)" }}
     >
       <div class="container mx-auto px-12 py-4 flex justify-between items-center">
-        <a href="/" class="text-2xl text-white">音MAD HoF</a>
-        <div>
-          <a href="https://github.com/otomadb/hof" class="text-xl text-white">GitHub</a>
+        <div class="flex gap-x-4">
+          <a href="/" class="text-2xl text-white">音MAD HoF</a>
+        </div>
+        <div class="flex gap-x-4">
+          <a href="https://github.com/otomadb/hof" class="text-lg text-white font-mono">GitHub</a>
+          <a href="https://x.com/SnO2WMaN" class="text-lg text-white font-mono">@SnO2WMaN</a>
         </div>
       </div>
     </nav>
