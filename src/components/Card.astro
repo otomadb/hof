@@ -15,7 +15,7 @@ const furl = url ? new URL(url) : "#";
 ---
 
 <a
-  class="group relative h-[108px] flex rounded-xl overflow-hidden shadow-lg border border-slate-200 hover:scale-[102.5%] transition-transform duration-300"
+  class="group relative h-[108px] flex rounded-xl overflow-hidden shadow-lg border border-slate-200/50"
   href={url}
 >
   <div class="relative z-1">
@@ -26,23 +26,25 @@ const furl = url ? new URL(url) : "#";
       width={192}
       height={108}
       loading="lazy"
+      decoding="async"
     />}
   </div>
-  <div class="relative flex-grow">
+  <div class="relative flex-grow overflow-hidden">
     {<Image
-      class="absolute top-0 left-0 object-cover w-full h-full z-[-1] select-none"
+      class="absolute top-0 left-0 object-cover w-full h-full z-[-1] select-none group-hover:scale-110 transition-transform duration-500"
       src={thumbnail ? thumbnail : pseudoThumbnail}
       alt={title}
       width={512}
       height={288}
       loading="lazy"
+      decoding="async"
     />}
     <div
-      class="absolute inset-0 bg-white/90 py-4 px-8 flex flex-col"
+      class="absolute inset-0 bg-white/90 group-hover:bg-white/95 transition-colors duration-300 py-4 px-8 flex flex-col"
       style={{ backdropFilter: "blur(2px)" }}
     >
-      <p class="flex-grow text-slate-700 break-all text-xl">{title}</p>
-      <p class="flex-shrink-0 font-mono text-sm text-slate-500">{furl}</p>
+      <p class="flex-grow text-slate-700 break-all text-lg">{title}</p>
+      <p class="mt-2 flex-shrink-0 font-mono text-xs text-slate-500">{furl}</p>
     </div>
   </div>
 </a>
