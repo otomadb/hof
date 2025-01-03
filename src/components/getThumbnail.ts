@@ -1,16 +1,21 @@
 import ky from "ky";
-import pseudoThumbnail from "../images/pseudo_thumbnail.jpg";
+
+import pseudoNicovideo from "../images/pseudo_nicovideo_thumbnail.jpg";
+import deletedNicovideo from "../images/deleted_nicovideo_thumbnail.jpg";
+
+import pseudoYoutube from "../images/pseudo_youtube_thumbnail.png";
+
 import * as v from "valibot";
 
 export default async function (type: string, url: string | null) {
-  if (!url) return pseudoThumbnail;
+  if (!url) return pseudoNicovideo;
 
   switch (type) {
     case "nicovideo": {
       const sourceId = /(nm|sm)\d+/.exec(url)?.[0];
 
       if (!sourceId) {
-        return pseudoThumbnail;
+        return pseudoNicovideo;
       }
 
       const res = await ky.get(
@@ -25,7 +30,7 @@ export default async function (type: string, url: string | null) {
       );
       if (!res.ok) {
         try {
-          const a = await res.json().then((re) =>
+          const ls = await res.json().then((re) =>
             v.parse(
               v.object({
                 reason: v.union([
@@ -37,29 +42,32 @@ export default async function (type: string, url: string | null) {
               re,
             ),
           );
-          switch (a.reason) {
+          switch (ls.reason) {
             case "FETCH_FAILED":
-              return pseudoThumbnail;
+              console.log(ls.data);
+              return deletedNicovideo;
             case "INVALID_RESPONSE":
-              console.error(a.data);
-              return pseudoThumbnail;
+              console.log(ls.data);
+              return pseudoNicovideo;
           }
         } catch (e) {
-          console.error(e);
-          return pseudoThumbnail;
+          console.log(e);
+          return pseudoNicovideo;
         }
       }
 
       const a = await res.json();
       const b = v.safeParse(v.object({ thumbnailUrl: v.string() }), a);
       if (!b.success) {
-        console.error(b.issues);
-        return pseudoThumbnail;
+        console.log(b.issues);
+        return pseudoNicovideo;
       }
 
       return b.output.thumbnailUrl;
     }
+    case "youtube":
+      return pseudoYoutube;
     default:
-      return pseudoThumbnail;
+      return pseudoYoutube;
   }
 }
