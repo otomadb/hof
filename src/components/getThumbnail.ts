@@ -26,7 +26,32 @@ export default async function (
           throwHttpErrors: false,
         },
       );
-      if (!res.ok) return pseudoThumbnail.src;
+      if (!res.ok) {
+        try {
+          const a = await res.json().then((re) =>
+            v.parse(
+              v.object({
+                reason: v.union([
+                  v.literal("FETCH_FAILED"),
+                  v.literal("INVALID_RESPONSE"),
+                ]),
+                data: v.unknown(),
+              }),
+              re,
+            ),
+          );
+          switch (a.reason) {
+            case "FETCH_FAILED":
+              return pseudoThumbnail.src;
+            case "INVALID_RESPONSE":
+              console.error(a.data);
+              return pseudoThumbnail.src;
+          }
+        } catch (e) {
+          console.error(e);
+          return pseudoThumbnail.src;
+        }
+      }
 
       const a = await res.json();
       const b = v.safeParse(v.object({ thumbnailUrl: v.string() }), a);
