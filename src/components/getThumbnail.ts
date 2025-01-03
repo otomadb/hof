@@ -2,24 +2,21 @@ import ky from "ky";
 import pseudoThumbnail from "../images/pseudo_thumbnail.jpg";
 import * as v from "valibot";
 
-export default async function (
-  type: string,
-  url: string | null,
-): Promise<string> {
-  if (!url) return pseudoThumbnail.src;
+export default async function (type: string, url: string | null) {
+  if (!url) return pseudoThumbnail;
 
   switch (type) {
     case "nicovideo": {
       const sourceId = /(nm|sm)\d+/.exec(url)?.[0];
 
       if (!sourceId) {
-        return pseudoThumbnail.src;
+        return pseudoThumbnail;
       }
 
       const res = await ky.get(
         new URL(
           `/video/${sourceId}`,
-          "https://nicovideo-api-proxy.otomadb.com",
+          " https://nicovideo-api-proxy.otomadb.com",
         ),
         {
           retry: 3,
@@ -42,14 +39,14 @@ export default async function (
           );
           switch (a.reason) {
             case "FETCH_FAILED":
-              return pseudoThumbnail.src;
+              return pseudoThumbnail;
             case "INVALID_RESPONSE":
               console.error(a.data);
-              return pseudoThumbnail.src;
+              return pseudoThumbnail;
           }
         } catch (e) {
           console.error(e);
-          return pseudoThumbnail.src;
+          return pseudoThumbnail;
         }
       }
 
@@ -57,12 +54,12 @@ export default async function (
       const b = v.safeParse(v.object({ thumbnailUrl: v.string() }), a);
       if (!b.success) {
         console.error(b.issues);
-        return pseudoThumbnail.src;
+        return pseudoThumbnail;
       }
 
       return b.output.thumbnailUrl;
     }
     default:
-      return pseudoThumbnail.src;
+      return pseudoThumbnail;
   }
 }

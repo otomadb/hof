@@ -8,5 +8,8 @@ export default defineConfig({
   output: "static",
   image: {
     domains: ["img.cdn.nimg.jp"],
+    service: {
+      entrypoint: "astro/assets/services/noop",
+    },
   },
 });

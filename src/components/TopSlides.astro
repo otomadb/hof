@@ -1,8 +1,11 @@
 ---
+import { Image } from "astro:assets";
+import type getThumbnail from "./getThumbnail";
+
 interface Props {
   title: string;
   href: string;
-  c: { title: string; thumbnail: string }[];
+  c: { title: string; thumbnail: Awaited<ReturnType<typeof getThumbnail>> }[];
 }
 
 const { title, href, c } = Astro.props;
@@ -15,7 +18,7 @@ const { title, href, c } = Astro.props;
   <div class="relative h-full">
     {
       c.map(({ thumbnail, title }, i) => (
-        <img
+        <Image
           class="absolute w-[384px] h-full object-cover"
           style={{
             clipPath: "polygon(12.5% 0, 100% 0%, 87.5% 100%, 0% 100%)",
@@ -23,10 +26,10 @@ const { title, href, c } = Astro.props;
             left: (i - 0.125 * (i + 1)) * 384 + "px",
             zIndex: -i
           }}
-          src={thumbnail}
+          src={thumbnail as any}
           alt={title}
-          width={384}
-          height={256}
+          width={512}
+          height={288}
         />
       ))
     }

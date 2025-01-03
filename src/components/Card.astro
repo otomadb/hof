@@ -18,20 +18,20 @@ const furl = url ? new URL(url) : "#";
   href={url}
 >
   <div class="flex-shrink-0 relative z-1">
-    {<img
+    {<Image
       class="w-full sm:w-[192px] h-full object-cover bg-black"
-      src={thumbnail}
+      src={thumbnail as any}
       alt={title}
-      width={192}
-      height={108}
+      width={512}
+      height={288}
       loading="lazy"
       decoding="async"
     />}
   </div>
   <div class="flex-grow relative flex-grow">
-    {<img
+    {<Image
       class="absolute top-0 left-0 object-cover w-full h-full z-[-1] select-none group-hover:scale-105 transition-transform duration-500"
-      src={thumbnail}
+      src={thumbnail as any}
       alt={title}
       width={512}
       height={288}
