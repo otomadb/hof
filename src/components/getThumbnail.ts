@@ -30,7 +30,7 @@ export default async function (type: string, url: string | null) {
       );
       if (!res.ok) {
         try {
-          const a = await res.json().then((re) =>
+          const ls = await res.json().then((re) =>
             v.parse(
               v.object({
                 reason: v.union([
@@ -42,11 +42,12 @@ export default async function (type: string, url: string | null) {
               re,
             ),
           );
-          switch (a.reason) {
+          switch (ls.reason) {
             case "FETCH_FAILED":
+              console.log(ls.data);
               return deletedNicovideo;
             case "INVALID_RESPONSE":
-              console.log(a.data);
+              console.log(ls.data);
               return pseudoNicovideo;
           }
         } catch (e) {
@@ -67,6 +68,6 @@ export default async function (type: string, url: string | null) {
     case "youtube":
       return pseudoYoutube;
     default:
-      return pseudoNicovideo;
+      return pseudoYoutube;
   }
 }
