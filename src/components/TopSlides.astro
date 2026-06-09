@@ -1,11 +1,11 @@
 ---
 import { Image } from "astro:assets";
-import type getThumbnail from "./getThumbnail";
+import pseudoThumbnail from "../images/pseudo_thumbnail.jpg";
 
 interface Props {
   title: string;
   href: string;
-  c: { title: string; thumbnail: Awaited<ReturnType<typeof getThumbnail>> }[];
+  c: { title: string; thumbnail: string | null }[];
 }
 
 const { title, href, c } = Astro.props;
@@ -26,7 +26,7 @@ const { title, href, c } = Astro.props;
             left: (i - 0.125 * (i + 1)) * 384 + "px",
             zIndex: -i
           }}
-          src={thumbnail as any}
+          src={(thumbnail || pseudoThumbnail) as any}
           alt={title}
           width={512}
           height={288}

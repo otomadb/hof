@@ -16,3 +16,5 @@ dist/
 
 # lefthook
 lefthook-local.yml
+
+src/data/*.json

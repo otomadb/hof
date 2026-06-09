@@ -1,16 +1,12 @@
 ---
 import NormalLayout from "../../layouts/Default.astro";
-import fetch10sen from "../../data/fetch10sen";
+import data from "../../data/10sen.json";
 // biome-ignore lint/style/useImportType: <explanation>
 import Card from "../../components/Card.astro";
 import type { ComponentProps } from "astro/types";
 
-const data = await fetch10sen();
-
 export async function getStaticPaths() {
-  return Object.keys(await fetch10sen()).map((year) => ({
-    params: { year },
-  }));
+  return Object.keys(data).map((year) => ({ params: { year } }));
 }
 
 const { year } = Astro.params;
@@ -18,20 +14,16 @@ const { year } = Astro.params;
 const a: [string, ComponentProps<typeof Card>[]][] = Object.entries(
   Object.groupBy(
     // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    data[year]!,
+    data[year as keyof typeof data]!,
     ({ count }) => count,
   ),
 )
   .toSorted(([a], [b]) => Number.parseInt(b, 10) - Number.parseInt(a, 10))
-  .filter(
-    (
-      x,
-    ): x is [
-      string,
-      { count: number; url: string | null; title: string; type: string }[],
-    ] => !!x[1],
-  )
-  .map(([b, c]) => [b, c.map(({ count, ...rest }) => ({ ...rest }))]);
+  .map(([b, c]) => [
+    b,
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    c!.map(({ count, ...rest }) => ({ ...rest })),
+  ]);
 ---
 
 <NormalLayout title={`音MAD作者が選ぶ${year}年の音MAD10選`}>

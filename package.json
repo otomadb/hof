@@ -1,32 +1,34 @@
 {
-    "name": "hofs",
-    "type": "module",
-    "private": true,
-    "scripts": {
-        "dev": "astro dev",
-        "start": "astro dev",
-        "build": "astro build",
-        "preview": "wrangler pages dev ./dist",
-        "typecheck": "tsc --noEmit",
-        "check": "biome check .",
-        "fmt": "biome check --write ."
-    },
-    "packageManager": "npm@10.9.2",
-    "dependencies": {
-        "@astrojs/svelte": "^7.0.0",
-        "@astrojs/tailwind": "^5.1.0",
-        "@fontsource-variable/jetbrains-mono": "^5.1.2",
-        "@fontsource/zen-antique-soft": "^5.1.1",
-        "@tailwindcss/container-queries": "^0.1.1",
-        "astro": "^5.0.0",
-        "ky": "^1.7.4",
-        "svelte": "^5.0.0",
-        "tailwindcss": "^3.4.1",
-        "valibot": "^1.0.0-beta.9"
-    },
-    "devDependencies": {
-        "@biomejs/biome": "1.9.4",
-        "typescript": "^5.0.0",
-        "wrangler": "^3.0.0"
-    }
+  "name": "hofs",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "prebuild": "npm run generate:10sen",
+    "generate:10sen": "node --experimental-strip-types generate_10sen.ts",
+    "preview": "wrangler pages dev ./dist",
+    "typecheck": "tsc --noEmit",
+    "check": "biome check .",
+    "fmt": "biome check --write ."
+  },
+  "packageManager": "npm@10.9.2",
+  "dependencies": {
+    "@astrojs/svelte": "^7.0.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "@fontsource-variable/jetbrains-mono": "^5.1.2",
+    "@fontsource/zen-antique-soft": "^5.1.1",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "astro": "^5.0.0",
+    "ky": "^1.7.4",
+    "svelte": "^5.0.0",
+    "tailwindcss": "^3.4.1",
+    "valibot": "^1.0.0-beta.9"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "typescript": "^5.0.0",
+    "wrangler": "^3.0.0"
+  }
 }

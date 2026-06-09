@@ -4,27 +4,24 @@ import type { ComponentProps } from "astro/types";
 // import data from "../data/10sen.json";
 // biome-ignore lint/style/useImportType: <explanation>
 import TopSlides from "../components/TopSlides.astro";
-import getThumbnail from "../components/getThumbnail";
-import fetch10sen from "../data/fetch10sen";
-import fetchMiru10 from "../data/fetchMiru10";
+import data10sen from "../data/10sen.json";
 
-const ten: ComponentProps<typeof TopSlides>[] = await Promise.all(
-  Object.entries(await fetch10sen())
-    .toReversed()
-    .map(async ([year, values]) => {
-      return {
-        href: `/10sen/${year}`,
-        title: `音MAD作者が選ぶ${year}年の音MAD10選`,
-        c: await Promise.all(
-          values.slice(0, 8).map(async ({ title, url }) => ({
-            title,
-            thumbnail: await getThumbnail(url),
-          })),
-        ),
-      };
-    }),
-);
+const slides10sen: ComponentProps<typeof TopSlides>[] = Object.entries(
+  data10sen,
+)
+  .toReversed()
+  .map(([year, values]) => {
+    return {
+      href: `/10sen/${year}`,
+      title: `音MAD作者が選ぶ${year}年の音MAD10選`,
+      c: values.slice(0, 8).map(({ title, thumbnail }) => ({
+        title,
+        thumbnail: thumbnail,
+      })),
+    };
+  });
 
+/*
 const miru10: ComponentProps<typeof TopSlides>[] = await Promise.all(
   Object.entries(await fetchMiru10())
     .toReversed()
@@ -41,6 +38,7 @@ const miru10: ComponentProps<typeof TopSlides>[] = await Promise.all(
       };
     }),
 );
+*/
 ---
 
 
@@ -49,14 +47,16 @@ const miru10: ComponentProps<typeof TopSlides>[] = await Promise.all(
   <p class="text-slate-900 mb-4 text-center">デバイス規制などの技術的な問題で、視聴可能な動画のサムネイルが取得出来ていないケースがありますので、あくまで参考程度にしてください。</p>
   <div class="flex flex-col gap-y-8">
     {
-      ten.map((props) => (
+      slides10sen.map((props) => (
         <TopSlides {...props} />
       ))
     }
     {
+      /*
       miru10.map((props) => (
         <TopSlides {...props} />
       ))
+        */
     }
   </div>
 </NormalLayout>

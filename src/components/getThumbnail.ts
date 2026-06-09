@@ -1,3 +1,4 @@
+import ky from "ky";
 import * as v from "valibot";
 import pseudoThumbnail from "../images/pseudo_thumbnail.jpg";
 
@@ -8,15 +9,23 @@ export default async function (url: string | null) {
   roxyUrl.searchParams.set("q", url);
 
   try {
-    const roxyRes = await fetch(roxyUrl);
-    if (roxyRes.status !== 200) return pseudoThumbnail;
     const roxyData = v.safeParse(
       v.object({
         title: v.string(),
         url: v.string(),
         thumbnail: v.string(),
       }),
-      await roxyRes.json(),
+      await ky
+        .get(roxyUrl, {
+          retry: {
+            limit: 3,
+            methods: ["get"],
+            statusCodes: [408, 429, 500, 502, 503, 504],
+            backoffLimit: 3000,
+          },
+          timeout: 10000,
+        })
+        .json(),
     );
 
     if (!roxyData.success) return pseudoThumbnail;
